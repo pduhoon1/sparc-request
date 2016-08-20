@@ -52,18 +52,14 @@ $(document).ready ->
         window.location = "/dashboard/protocols/#{protocol_id}"
 
       $(document).on 'click', '.requests_display_link', ->
-        # Opens the requests modal
         protocol_id = $(this).parents("tr").data('protocol-id')
-        $.ajax
+        window.modalStack.addModal
           type: 'get'
           url: "/dashboard/protocols/#{protocol_id}/display_requests"
           success: (data) ->
-            $('#modal_place').html(data.modal)
-            $('#modal_place').modal 'show'
             $('.service-requests-table').bootstrapTable()
             $('.service-requests-table').on 'all.bs.table', ->
               $(this).find('.selectpicker').selectpicker()
-
 
       $(document).on 'click', '.protocol-archive-button', ->
         protocol_id = $(this).parents("tr").data('protocol-id')
@@ -163,7 +159,7 @@ $(document).ready ->
         admin_filter      = $('#admin_filter').val()
         sorted_by         = "#{$(this).data('sort-name')} #{$(this).data('sort-order')}"
         page              = $('#page').val() || 1
-        data = 
+        data =
           'page': page
           'filterrific':
             'search_query': search_query

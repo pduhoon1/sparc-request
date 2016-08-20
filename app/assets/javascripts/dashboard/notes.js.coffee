@@ -27,7 +27,7 @@ $ ->
     data = note:
       notable_id: id
       notable_type: type
-    $.ajax
+    window.modalStack.addModal
       type: 'GET'
       url: '/dashboard/notes'
       data: data
