@@ -10,9 +10,15 @@ class ModalStack
 
     # When closing a modal, remove its ajax options from @stack
     # and show previous modal, if one exists.
-    $(document).on 'hidden.bs.modal', modalPlaceSelector, =>
+    $(document).on 'hide.bs.modal', modalPlaceSelector, (event) =>
       @stack.pop()
       if @stack.length > 0
+        # Prevent Bootstrap from closing our modal.
+        # ModalStack or a js view will replace the modal for Bootstrap.
+        event.preventDefault()
+        event.stopImmediatePropagation()
+
+        # Get previous modal
         ajaxOptions = @stack.pop()
         @_showModal(ajaxOptions)
 
