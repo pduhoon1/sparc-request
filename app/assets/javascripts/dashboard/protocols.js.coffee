@@ -85,7 +85,7 @@ $(document).ready ->
         if data["filterrific[with_owner][]"] && data["filterrific[with_owner][]"].length
           data["filterrific[with_owner][]"] = $("#filterrific_with_owner").val()
 
-        $.ajax
+        window.modalStack.addModal
           type: 'GET'
           url:  "/dashboard/protocol_filters/new"
           data: data
@@ -123,7 +123,7 @@ $(document).ready ->
 
       $(document).on 'click', '.view-service-request', ->
         id = $(this).data('sub-service-request-id')
-        $.ajax
+        window.modalStack.addModal
           method: 'GET'
           url: "/dashboard/sub_service_requests/#{id}.js"
 

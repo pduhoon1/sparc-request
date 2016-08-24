@@ -58,7 +58,7 @@ $(document).ready ->
         alert("You can not send a message to yourself.")
         reset_select_picker()
       else
-        $.ajax
+        window.modalStack.addModal
           type: 'GET'
           url:  '/dashboard/notifications/new.js'
           data:
