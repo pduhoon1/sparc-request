@@ -67,7 +67,7 @@ $ ->
   $(document).on 'click', '.otf_fulfillment_list', ->
     line_item_id = $(this).data('line-item-id')
     data = line_item_id: line_item_id
-    $.ajax
+    window.modalStack.addModal
       type: 'GET'
       url: "/dashboard/fulfillments"
       data: "line_item_id" : line_item_id
@@ -85,7 +85,7 @@ $ ->
   $(document).on 'click', '.otf_fulfillment_edit', ->
     row_index   = $(this).parents('tr').data('index')
     fulfillment_id = $(this).parents("#fulfillments-table").bootstrapTable('getData')[row_index].id
-    $.ajax
+    window.modalStack.addModal
       type: 'GET'
       url: "/dashboard/fulfillments/#{fulfillment_id}/edit"
 
