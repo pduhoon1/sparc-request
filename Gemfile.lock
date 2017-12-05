@@ -27,8 +27,8 @@ GIT
 
 GIT
   remote: https://github.com/randym/axlsx
-  revision: c8ac844572b25fda358cc01d2104720c4c42f450
-  branch: master
+  revision: 776037c0fc799bb09da8c9ea47980bd3bf296874
+  ref: 776037c0fc799bb09da8c9ea47980bd3bf296874
   specs:
     axlsx (2.1.0.pre)
       htmlentities (~> 4.3.4)
