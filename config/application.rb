@@ -37,6 +37,8 @@ module SparcRails
 
     config.eager_load = true
 
+    config.load_defaults 5.2
+
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.

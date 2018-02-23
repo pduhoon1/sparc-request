@@ -31,6 +31,9 @@ SparcRails::Application.configure do
   config.eager_load = true
   config.enable_dependency_loading = false
 
+  config.require_master_key = true
+  config.active_storage.service = :local
+
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true

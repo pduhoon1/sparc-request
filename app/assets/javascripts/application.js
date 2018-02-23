@@ -28,6 +28,7 @@
 // the compiled file.
 //
 //= require jquery2
+//= require activestorage
 //= require jquery-migrate
 //= require bootstrap-sprockets
 //= require bootstrap-select
