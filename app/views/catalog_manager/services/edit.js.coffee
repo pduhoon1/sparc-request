@@ -19,3 +19,49 @@
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 $("#org-form-container").html("<%= j render '/catalog_manager/services/form', service: @service %>")
+$('.selectpicker').selectpicker();
+$("[data-toggle='toggle']").bootstrapToggle(
+    on: 'Yes',
+    off: 'No'
+  );
+
+
+# Identity Search Bloodhound
+services_bloodhound = new Bloodhound(
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  remote:
+    url: "/search/identities?term=%QUERY",
+    wildcard: '%QUERY'
+)
+services_bloodhound.initialize() # Initialize the Bloodhound suggestion engine
+$('#user-rights-query').typeahead(
+  {
+    minLength: 3,
+    hint: false,
+  },
+  {
+    displayKey: 'term',
+    source: services_bloodhound,
+    limit: 100,
+    templates: {
+      suggestion: Handlebars.compile("<button class=\"text-left col-sm-12\">
+                                        <strong>{{name}}</strong> <span>{{email}}{{identity_id}}</span>
+                                      </button>")
+      notFound: '<div class="tt-suggestion">No Results</div>'
+    }
+  }
+).on('typeahead:select', (event, suggestion) ->
+  users_on_table = $("[id*='user-rights-row-']").map ->
+    return $(this).data('identity-id')
+
+  if suggestion['identity_id'] in users_on_table
+    $('#user-rights-query').parent().prepend("<div class='alert alert-danger alert-dismissable'>#{suggestion['name']} #{I18n['catalog_manager']['service_form']['user_rights']['user_in_table']}</div>")
+    $('.alert-dismissable').delay(3000).fadeOut()
+  else
+    $.ajax
+      type: 'get'
+      url: "/catalog_manager/services/<%= @service.id %>/refresh_user_rights.js"
+      data:
+        new_ur_identity_id: suggestion['identity_id']
+)
